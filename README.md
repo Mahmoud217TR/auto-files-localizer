@@ -1,68 +1,124 @@
-# :package_description
+# Auto Files Localizer for Laravel
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/:vendor_slug/:package_slug/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/:vendor_slug/:package_slug/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_slug/:package_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_slug/:package_slug)
-<!--delete-->
----
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/mahmoud217tr/auto-files-localizer.svg?style=flat-square)](https://packagist.org/packages/mahmoud217tr/auto-files-localizer)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/mahmoud217tr/auto-files-localizer/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/mahmoud217tr/auto-files-localizer/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/mahmoud217tr/auto-files-localizer/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/mahmoud217tr/auto-files-localizer/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/mahmoud217tr/auto-files-localizer.svg?style=flat-square)](https://packagist.org/packages/mahmoud217tr/auto-files-localizer)
 
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Have fun creating your package.
-4. If you need help creating a package, consider picking up our <a href="https://laravelpackage.training">Laravel Package Training</a> video course.
----
-<!--/delete-->
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+**Easy and Efficient Localiztion**
 
-## Support us
+A Laravel Localization package that auto generate json locale files
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/:package_name.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/:package_name)
+![logo](assets/auto-files-localizer.svg)
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
+## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Config](#config)
+- [Usage](#usage)
+    - [Dynamic Mode](#dynamic-mode)
+    - [Extraction Mode](#extraction-mode)
+- [Testing](#testing)
+- [Changelog](#changelog)
+- [Security Vulnerabilities](#security-vulnerabilities)
+- [Credits](#credits)
+- [License](#license)
 
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+## Features
+
+* Supports Laravel (8.X, 9.X, 10.X, 11.X).
+* 2 Modes (Dynamic Mode, Extraction Mode).
+* Fast and reliable.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
+composer require mahmoud217tr/auto-files-localizer
 ```
 
-You can publish and run the migrations with:
+## Config
+
+To publish the package configuration file `config/auto-localizer.php` use the following command:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
+php artisan vendor:publish --tag="auto-files-localizer-config"
 ```
 
 ## Usage
 
+It will automatically generate the locale `.json` file where the localized new words are sorted alphabetically.
+
+**There are 2 modes for the package**
+
+### Dynamic Mode
+
+In this mode the translations will be generated dynamically **(On Request)** which means on upon calling the translation function the package will dynamically detect the current language and add the translations to the corresponding `JSON` file.
+
+#### Notes
+* Note that this mode shouldn't work on production for performance purposes, but if you want to change this behavior via the configuration file.
+
+* This mode is not recommended using with `vite development` mode. If you want to use it please **build your assets first** using `npm run build` then activate the auto translation mode. **OTHERWISE YOUR APP WILL STUCK IN RELOAD LOOP**
+
+#### Activiation
+To activate the `dynamic` mode on `non-production` environment just add the following line to the `.env` file:
+
+```
+AUTO_LOCALIZER_ENABLED=true
+```
+
+And that's about it the autotranslator will add transaltions to there files sorted alphabetically.
+To deactivate the dynamic mode just set the previous value to `false`.
+
+#### Configurations
+
+This mode have the following configurations:
+
 ```php
-$variable = new VendorName\Skeleton();
-echo $variable->echoPhrase('Hello, VendorName!');
+'dynamic' => [
+    # Controls if the dynamic mode should work or not on non-production environments
+    'enabled' => (bool) env('AUTO_LOCALIZER_ENABLED', false), 
+    # Controls if the dynamic mode should work or on production environment (compined with the previous option)
+    'production' => false,
+],
+```
+
+### Extraction Mode
+
+In this mode the translations will be extracted automatically from `views` or `php` files detecting translation functions adding the translations to the corresponding `JSON` file.
+
+#### Command 
+
+To extract the translations for a specific locale (`ar` for example) run the following command:
+
+```shell
+php artisan auto-localizer:extract ar
+```
+
+The previous command will translate all `non-localized` phrases and all `ar-localized` phrases only.
+
+#### Configurations
+
+This mode have the following configurations:
+
+```php
+'extraction' => [
+    # The directories where the translation scanner will scan
+    'directories' => [
+        'resources/views',
+    ],
+    # The file patterns that the translation scanner will scan
+    'patterns' => [
+        '*.php'
+    ],
+    # The translation functions or directives that scanner will detect (you should add your custom functions here)
+    'functions' => [
+        '__',
+        'trans',
+        '@lang',
+    ],
+],
 ```
 
 ## Testing
@@ -85,7 +141,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [:author_name](https://github.com/:author_username)
+- [Mahmoud Mahmoud](https://github.com/Mahmoud217TR)
 - [All Contributors](../../contributors)
 
 ## License
