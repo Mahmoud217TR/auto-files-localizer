@@ -93,7 +93,7 @@ In this mode the translations will be extracted automatically from `views` or `p
 To extract the translations for a specific locale (`ar` for example) run the following command:
 
 ```shell
-php artisan auto-localizer:extract ar
+php artisan localizer:extract ar
 ```
 
 The previous command will translate all `non-localized` phrases and all `ar-localized` phrases only.
