@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\File;
 
-it("testTranslationSavedToJson", function () {
-    $sentance = "Welcome";
-    $locale = "en";
+it('testTranslationSavedToJson', function () {
+    $sentance = 'Welcome';
+    $locale = 'en';
 
     $translation = __($sentance);
     $this->assertEquals($sentance, $translation);
@@ -16,10 +16,10 @@ it("testTranslationSavedToJson", function () {
     expect($sentance)->toEqual($translations[$sentance]);
 });
 
-it("testTranslationNotSavedToJson", function () {
-    $sentance = "Welcome :user";
-    $locale = "en";
-    $alternativeLocale = "ar";
+it('testTranslationNotSavedToJson', function () {
+    $sentance = 'Welcome :user';
+    $locale = 'en';
+    $alternativeLocale = 'ar';
 
     __($sentance, [], $alternativeLocale);
 

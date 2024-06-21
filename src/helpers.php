@@ -10,13 +10,14 @@ if (! function_exists('default_languages_path')) {
 }
 
 if (! function_exists('locale_json_file_path')) {
-    function locale_json_file_path(string $locale = "", string $languagesDirectory = null): string
+    function locale_json_file_path(string $locale = '', ?string $languagesDirectory = null): string
     {
         if (is_null($languagesDirectory)) {
             $languagesDirectory = default_languages_path();
         }
         $fileName = "{$locale}.json";
         $directorySeperator = DIRECTORY_SEPARATOR;
+
         return "{$languagesDirectory}{$directorySeperator}{$fileName}";
     }
 }

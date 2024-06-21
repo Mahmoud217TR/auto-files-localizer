@@ -10,9 +10,9 @@ use Symfony\Component\Finder\Finder;
 
 class TranslationScanner
 {
-    public function findAndEvaluate():void
+    public function findAndEvaluate(): void
     {
-        $this->getFiles()->each(function($file) {
+        $this->getFiles()->each(function ($file) {
             $this->extractFunctionCalls($file, config('auto-files-localizer.extraction.functions'));
         });
     }
@@ -37,7 +37,7 @@ class TranslationScanner
         foreach ($functions as $function) {
             if (preg_match_all($this->functionPattern($function), $contents, $matches)) {
                 $function = $matches[0][0];
-                if(Str::startsWith($function, '@')) {
+                if (Str::startsWith($function, '@')) {
                     Blade::render($function);
                 } else {
                     eval("{$function};");

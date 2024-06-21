@@ -33,7 +33,7 @@ return [
             'resources/views',
         ],
         'patterns' => [
-            '*.php'
+            '*.php',
         ],
         'functions' => [
             '__',

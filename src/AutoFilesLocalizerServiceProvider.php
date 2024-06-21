@@ -5,9 +5,9 @@ namespace Mahmoud217TR\AutoFilesLocalizer;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Translation\Translator;
+use Mahmoud217TR\AutoFilesLocalizer\Commands\AutoTranslationExtractionCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Mahmoud217TR\AutoFilesLocalizer\Commands\AutoTranslationExtractionCommand;
 
 class AutoFilesLocalizerServiceProvider extends PackageServiceProvider implements DeferrableProvider
 {
@@ -31,6 +31,7 @@ class AutoFilesLocalizerServiceProvider extends PackageServiceProvider implement
             $locale = $app->getLocale();
             $translantor = new AutoFilesLocalizer($loader, $locale);
             $translantor->setFallback($app->getFallbackLocale());
+
             return $translantor;
         }, true);
     }

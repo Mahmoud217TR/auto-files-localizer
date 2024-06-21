@@ -7,10 +7,12 @@ use Illuminate\Support\Facades\File;
 class AutoExtractionTranslator extends AbstractAutoTranslator
 {
     protected ?string $locale;
+
     protected string $localeFilePath;
+
     protected array $translations;
 
-    public function __construct(string $locale = null)
+    public function __construct(?string $locale = null)
     {
         $this->locale = $locale;
         if (filled($this->locale)) {
@@ -20,11 +22,11 @@ class AutoExtractionTranslator extends AbstractAutoTranslator
     }
 
     public function addTranslation(string $key): void
-	{
-        if (!isset($this->translations[$key])) {
+    {
+        if (! isset($this->translations[$key])) {
             $this->translations[$key] = $key;
         }
-	}
+    }
 
     public function saveTranslations(): void
     {
@@ -32,7 +34,7 @@ class AutoExtractionTranslator extends AbstractAutoTranslator
             ksort($this->translations);
             File::put(
                 $this->localeFilePath,
-                json_encode((object)$this->translations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+                json_encode((object) $this->translations, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
             );
         }
     }

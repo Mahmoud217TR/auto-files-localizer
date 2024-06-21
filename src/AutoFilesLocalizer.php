@@ -9,6 +9,7 @@ use Mahmoud217TR\AutoFilesLocalizer\Translators\AutoExtractionTranslator;
 class AutoFilesLocalizer extends Translator
 {
     protected AutoDynamicTranslator $dynamicTranslator;
+
     protected AutoExtractionTranslator $extractionTranslator;
 
     public function get($key, array $replace = [], $locale = null, $fallback = true)
@@ -28,16 +29,16 @@ class AutoFilesLocalizer extends Translator
 
     protected function getDynamicTranslator(): AutoDynamicTranslator
     {
-        if (!isset($this->dynamicTranslator)) {
+        if (! isset($this->dynamicTranslator)) {
             return $this->dynamicTranslator = new AutoDynamicTranslator();
         }
 
         return $this->dynamicTranslator;
     }
 
-    public function getExtractionTranslator(string $locale = null): AutoExtractionTranslator
+    public function getExtractionTranslator(?string $locale = null): AutoExtractionTranslator
     {
-        if (!isset($this->extractionTranslator)) {
+        if (! isset($this->extractionTranslator)) {
             return $this->extractionTranslator = new AutoExtractionTranslator($locale);
         }
 
@@ -47,7 +48,7 @@ class AutoFilesLocalizer extends Translator
     protected function inDynamicMode(): bool
     {
         return config('auto-files-localizer.dynamic.enabled') &&
-            (config('auto-files-localizer.dynamic.production') || !app()->environment('production'));
+            (config('auto-files-localizer.dynamic.production') || ! app()->environment('production'));
     }
 
     protected function inExtractionMode(string $language): bool

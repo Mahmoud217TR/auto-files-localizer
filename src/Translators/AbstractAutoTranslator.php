@@ -8,7 +8,7 @@ abstract class AbstractAutoTranslator
 {
     protected function getTranslations(string $filePath): array
     {
-        if (!File::exists($filePath)) {
+        if (! File::exists($filePath)) {
             File::put(
                 $filePath,
                 json_encode((object) [], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
@@ -18,7 +18,7 @@ abstract class AbstractAutoTranslator
         return json_decode(File::get($filePath), true);
     }
 
-    protected function getLocaleJsonFilePath(string $locale = null): string
+    protected function getLocaleJsonFilePath(?string $locale = null): string
     {
         return locale_json_file_path($locale, $this->getLanguagesDirectory());
     }
@@ -27,7 +27,7 @@ abstract class AbstractAutoTranslator
     {
         $langDir = config('auto-files-localizer.path');
 
-        if (!is_dir($langDir)) {
+        if (! is_dir($langDir)) {
             mkdir($langDir, 0755, true);
         }
 
