@@ -28,7 +28,7 @@ class AutoTranslationExtractionCommand extends Command
 
         $scanner->findAndEvaluate();
 
-        app()->translator->getExtractionTranslator()->saveTranslations();
+        app('translator')->getExtractionTranslator()->saveTranslations();
 
         return self::SUCCESS;
     }
