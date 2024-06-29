@@ -15,7 +15,7 @@ class TranslationScanner
 {
     protected ?Command $command;
 
-    public function __construct(Command $command = null)
+    public function __construct(?Command $command = null)
     {
         $this->command = $command;
     }
