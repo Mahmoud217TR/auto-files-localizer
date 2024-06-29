@@ -32,6 +32,6 @@ class AutoFilesLocalizerServiceProvider extends PackageServiceProvider
             $translantor->setFallback($app->getFallbackLocale());
 
             return $translantor;
-        }, true);
+        });
     }
 }
