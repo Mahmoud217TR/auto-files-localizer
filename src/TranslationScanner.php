@@ -13,18 +13,18 @@ use Symfony\Component\Finder\SplFileInfo;
 
 class TranslationScanner
 {
-    protected ?Command $command;
-
-    public function __construct(?Command $command = null)
-    {
-        $this->command = $command;
-    }
+    protected ?Command $command = null;
 
     public function findAndEvaluate(): void
     {
         $this->getFiles()->each(function ($file) {
             $this->extractFunctionCalls($file, config('auto-files-localizer.extraction.functions'));
         });
+    }
+
+    public function setCommand(Command $command = null): void
+    {
+        $this->command = $command;
     }
 
     protected function getFiles(): Collection
@@ -56,9 +56,9 @@ class TranslationScanner
                 } catch (Exception $exception) {
                     $message = $exception->getMessage();
                     if (filled($this->command)) {
-                        $this->command->error($message);
+                        $this->command->warn($message);
                     } else {
-                        Log::error($message);
+                        Log::warning($message);
                     }
                 }
             }

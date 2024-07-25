@@ -26,9 +26,12 @@ class AutoTranslationExtractionCommand extends Command
         config()->set('auto-files-localizer.extraction.locale', $locale);
         config()->set('auto-files-localizer.dynamic.enabled', false);
 
+        $scanner->setCommand($this);
         $scanner->findAndEvaluate();
 
         app('translator')->getExtractionTranslator()->saveTranslations();
+
+        $this->info("Translation extraction completed");
 
         return self::SUCCESS;
     }
