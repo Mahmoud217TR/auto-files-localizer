@@ -22,7 +22,7 @@ class TranslationScanner
         });
     }
 
-    public function setCommand(Command $command = null): void
+    public function setCommand(?Command $command = null): void
     {
         $this->command = $command;
     }

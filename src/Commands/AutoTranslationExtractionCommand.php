@@ -31,7 +31,7 @@ class AutoTranslationExtractionCommand extends Command
 
         app('translator')->getExtractionTranslator()->saveTranslations();
 
-        $this->info("Translation extraction completed");
+        $this->info('Translation extraction completed');
 
         return self::SUCCESS;
     }

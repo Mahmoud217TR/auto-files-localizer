@@ -30,7 +30,7 @@ class AutoFilesLocalizer extends Translator
     protected function getDynamicTranslator(): AutoDynamicTranslator
     {
         if (! isset($this->dynamicTranslator)) {
-            return $this->dynamicTranslator = new AutoDynamicTranslator();
+            return $this->dynamicTranslator = new AutoDynamicTranslator;
         }
 
         return $this->dynamicTranslator;
